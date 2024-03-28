@@ -1,16 +1,18 @@
+using CryptlexLicensingApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 
 namespace CryptlexLicensingApp.Pages
 {
-    public class LoginModel(ILogger<LoginModel> logger, HttpClient httpClient) : PageModel
+    public class LoginModel(ILogger<LoginModel> logger, HttpService httpService) : PageModel
     {
         private readonly ILogger<LoginModel> _logger = logger;
-        private readonly HttpClient _httpClient = httpClient;
+        private readonly HttpService _httpService = httpService;
 
         [BindProperty]
         public string Email { get; set; }
@@ -38,26 +40,20 @@ namespace CryptlexLicensingApp.Pages
                     password = Password
                 };
 
-                var jsonContent = JsonSerializer.Serialize(requestData);
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                _logger.LogInformation("Sending authentication request: {RequestData}", requestData);
 
-                _logger.LogInformation("Sending authentication request: {RequestData}", jsonContent);
+                var authResponse = await _httpService.SendPostAsync<AuthResponse>("v3/accounts/login", requestData, false);
 
-                var response = await _httpClient.PostAsync("https://api.cryptlex.com/v3/accounts/login", content);
-
-                if (response.IsSuccessStatusCode)
+                if (authResponse is not null)
                 {
-                    var objJson = await response.Content.ReadAsStringAsync();
-                    JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
-                    AuthResponse authResponse = JsonSerializer.Deserialize<AuthResponse>(objJson, options);
                     _logger.LogInformation("Authentication successful. Access Token: {AccessToken}", authResponse.AccessToken);
 
                     var claims = new List<Claim> { new(ClaimTypes.Name, Email), new(ClaimTypes.Authentication, authResponse.AccessToken) };
-                    var identity = new ClaimsIdentity(claims, "CookieAuthentication");
+                    const string CookieAuthentication = "CookieAuthentication";
+                    var identity = new ClaimsIdentity(claims, CookieAuthentication);
                     ClaimsPrincipal principal = new(identity);
-
-                    await HttpContext.SignInAsync("CookieAuthentication", principal);
-
+                    await HttpContext.SignInAsync(CookieAuthentication, principal);
+                    
                     return RedirectToPage("/Index");
                 }
             }

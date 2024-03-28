@@ -8,6 +8,40 @@
 
   <ItemGroup>
     <PackageReference Include="Cryptlex.LexActivator" Version="3.26.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x86\native\LexActivator32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x86\native\LexActivator32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x86\native\LexActivator32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x86\native\LexActivator32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x64\native\LexActivator.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x64\native\LexActivator.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\DesireKabwanga\.nuget\packages\cryptlex.lexactivator\3.26.0\build\..\runtimes\win-x86\native\LexActivator32.dll" />
   </ItemGroup>
 
 </Project>

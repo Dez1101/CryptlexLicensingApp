@@ -9,31 +9,29 @@
     <a id="addButton" class="btn btn-success">Add License</a>
 </p>
 
-@if (Model.Licenses.Count > 0)
+@if (Model.Licences.Count > 0)
 {
     <table class="table table-striped table-hover table-bordered">
         <thead class="thead-light">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
+                <th scope="col">Key</th>
                 <th scope="col">Type</th>
-                <th scope="col">Status</th>
+                <th scope="col">ProductId</th>
+                <th scope="col">Validity</th>
                 <th scope="col">ExpiresAt</th>
-                <th scope="col">ActivatedAt</th>
-                <th scope="col">DeactivatedAt</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var license in Model.Licenses)
+            @foreach (var license in Model.Licences)
             {
                 <tr>
                     <th scope="row">@license.Id</th>
-                    <td>@license.Name</td>
+                    <td>@license.Key</td>
                     <td>@license.Type</td>
-                    <td>@license.Status</td>
+                    <td>@license.ProductId</td>
+                    <td>@(license.Validity/60/60/24) Days</td>
                     <td>@license.ExpiresAt</td>
-                    <td>@license.ActivatedAt</td>
-                    <td>@license.DeactivatedAt</td>
                     <td>
                         <a class="btn btn-info btn-sm">Details</a>
                         <a class="btn btn-danger btn-sm">Delete</a>
